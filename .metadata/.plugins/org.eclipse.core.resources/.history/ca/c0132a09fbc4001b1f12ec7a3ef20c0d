@@ -1,0 +1,40 @@
+package com.blackstraw.Tool.serviceImpl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.blackstraw.Tool.model.Tool;
+import com.blackstraw.Tool.repository.ToolRepository;
+import com.blackstraw.Tool.service.ToolService;
+
+@Service
+public class ToolServiceImpl implements ToolService {
+	
+	@Autowired
+	private ToolRepository toolRepository;
+
+	@Override
+	public Tool save(Tool tool) {
+		return toolRepository.save(tool);
+	}
+
+	@Override
+	public Tool update(Tool tool) {
+		return null;
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Tool> getAllTools() {
+		// TODO Auto-generated method stub
+		return toolRepository.findAll();
+	}
+
+}

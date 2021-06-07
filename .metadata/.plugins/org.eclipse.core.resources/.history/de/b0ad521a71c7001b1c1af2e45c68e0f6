@@ -1,0 +1,5 @@
+package com.blackstraw.Tool.dto;
+
+public class ToolResponseDTO {
+
+}

@@ -12,6 +12,8 @@ public interface ToolService {
 	public List<Tool> getAllTools();
 	public Tool findById(int id);
 	
+//	public Tool findByName(String name);
+	public Tool findByName(String name);
 
 
 }

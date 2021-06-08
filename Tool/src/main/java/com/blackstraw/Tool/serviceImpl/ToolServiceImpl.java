@@ -54,6 +54,11 @@ public class ToolServiceImpl implements ToolService {
 		return toolRepository.findByName(name);
 	}
 
+	@Override
+	public Tool findByVersion(String version) {
+		return toolRepository.findByVersion(version);
+	}
+
 
 
 

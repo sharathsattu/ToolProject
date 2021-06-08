@@ -15,5 +15,5 @@ public interface ToolService {
 //	public Tool findByName(String name);
 	public Tool findByName(String name);
 
-
+	public Tool findByVersion(String version);
 }

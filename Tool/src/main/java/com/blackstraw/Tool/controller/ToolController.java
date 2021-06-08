@@ -40,7 +40,7 @@ public class ToolController {
 			responseDTO=prepareResponse(tool1);
 			return new ResponseEntity<ToolResponseDTO>(responseDTO,HttpStatus.OK);
 		}catch (Exception e){
-			logger.error("error while converting tool to dto",e,tool);
+			logger.error("error while saving tool",e,tool);
 			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -50,14 +50,14 @@ public class ToolController {
 		List<ToolResponseDTO> responseDTOList=new ArrayList<ToolResponseDTO>();
 		try {
 			List<Tool> toolList=toolService.getAllTools();
-			for(Tool tool1: toolList) {
+			for(Tool tools: toolList) {
 				try {
-					responseDTOList.add(prepareResponse(tool1));
+					responseDTOList.add(prepareResponse(tools));
 				}catch(Exception e) {
-					logger.error("error occured while converting tool to dto",e,tool1);
+					logger.error("error in getting all the tools",e,tools);
 					
 				}
-			} logger.info("Tool to response dto conversion completed");
+			} logger.info("All the tools retrieved");
 					return new ResponseEntity<List<ToolResponseDTO>>(responseDTOList, HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity<List<ToolResponseDTO>>(responseDTOList, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,11 +81,12 @@ public class ToolController {
 	public ResponseEntity<ToolResponseDTO> findById(@PathVariable("id") int id) {
 		ToolResponseDTO responseDTO=null;
 		try {
-			Tool tool1=toolService.findById(id);
-			responseDTO=prepareResponse(tool1);
+			Tool tools=toolService.findById(id);
+			responseDTO=prepareResponse(tools);
 			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.OK);
 		}catch(Exception e) {
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.error("enter the proper id",e,id);
+			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -93,14 +94,30 @@ public class ToolController {
 	public ResponseEntity<ToolResponseDTO> findByName(@PathVariable("name") String name) {
 		ToolResponseDTO responseDTO=null;
 		try {
-			Tool tool1=toolService.findByName(name);
-			responseDTO=prepareResponse(tool1);
+			Tool tools=toolService.findByName(name);
+			responseDTO=prepareResponse(tools);
 			return new ResponseEntity<ToolResponseDTO>(responseDTO,HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.error("--Tool name mismatch, enter a proper tool name--",e,name);
+			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.NO_CONTENT);
 		}
 		
 	}
+	
+	
+	@GetMapping("getversion/{version}")
+	public ResponseEntity<ToolResponseDTO> findByVersion(@PathVariable("version") String version){
+		ToolResponseDTO responseDTO=null;
+		try {
+			Tool tools=toolService.findByVersion(version);
+			responseDTO=prepareResponse(tools);
+			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.OK);
+		}catch(Exception e) {
+			logger.error("Requested version can't be found, enter proper version");
+			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	
 	private ToolResponseDTO prepareResponse(Tool tool) {
 		ToolResponseDTO responseDTO=new ToolResponseDTO();

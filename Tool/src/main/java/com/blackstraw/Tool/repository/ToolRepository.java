@@ -10,5 +10,7 @@ public interface ToolRepository extends JpaRepository<Tool, Integer> {
 
 	public Tool findByName(String name);
 
+	public Tool findByVersion(String version);
+
 
 }

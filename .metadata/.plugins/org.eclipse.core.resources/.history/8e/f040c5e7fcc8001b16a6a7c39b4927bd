@@ -1,0 +1,5 @@
+package com.blackstraw.Tool.globalExceptionHandler;
+
+public class NameMismatch {
+
+}

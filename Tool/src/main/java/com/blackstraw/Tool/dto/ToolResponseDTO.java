@@ -5,6 +5,21 @@ public class ToolResponseDTO {
 	private int id;
 	private String name;
 	private String version;
+	private String config;
+	
+	public ToolResponseDTO() {
+		
+	}
+	
+	
+	
+	public ToolResponseDTO(int id, String name, String config, String version) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.config = config;
+		this.version = version;
+	}
 	
 	
 	public int getId() {
@@ -25,6 +40,18 @@ public class ToolResponseDTO {
 	public void setVersion(String version) {
 		this.version = version;
 	}
+
+	public String getConfig() {
+		return config;
+	}
+
+	public void setConfig(String config) {
+		this.config = config;
+	}
+
+	
+	
+	
 
 	
 	

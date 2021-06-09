@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blackstraw.Tool.dto.ToolResponseDTO;
+import com.blackstraw.Tool.globalExceptionHandler.IdNotMatch;
+import com.blackstraw.Tool.globalExceptionHandler.NameMismatch;
+import com.blackstraw.Tool.globalExceptionHandler.VersionMismatch;
 import com.blackstraw.Tool.model.Tool;
 import com.blackstraw.Tool.service.ToolService;
 
@@ -36,11 +39,10 @@ public class ToolController {
 	public ResponseEntity<ToolResponseDTO> save(@RequestBody Tool tool) {
 		ToolResponseDTO responseDTO=null;
 		try {
-			Tool tool1=toolService.save(tool);
-			responseDTO=prepareResponse(tool1);
+			Tool tools=toolService.save(tool);
+			responseDTO=prepareResponse(tools);
 			return new ResponseEntity<ToolResponseDTO>(responseDTO,HttpStatus.OK);
 		}catch (Exception e){
-			logger.error("error while saving tool",e,tool);
 			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -55,10 +57,9 @@ public class ToolController {
 					responseDTOList.add(prepareResponse(tools));
 				}catch(Exception e) {
 					logger.error("error in getting all the tools",e,tools);
-					
 				}
 			} logger.info("All the tools retrieved");
-					return new ResponseEntity<List<ToolResponseDTO>>(responseDTOList, HttpStatus.OK);
+					return new ResponseEntity<List<ToolResponseDTO>>(responseDTOList, HttpStatus.OK);   
 		}catch(Exception e) {
 			return new ResponseEntity<List<ToolResponseDTO>>(responseDTOList, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -78,27 +79,42 @@ public class ToolController {
 	}
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<ToolResponseDTO> findById(@PathVariable("id") int id) {
+	public ResponseEntity<?> findById(@PathVariable("id") int id)  {
 		ToolResponseDTO responseDTO=null;
 		try {
 			Tool tools=toolService.findById(id);
-			responseDTO=prepareResponse(tools);
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("enter the proper id",e,id);
+			if(tools==null) {
+				throw new IdNotMatch(" Please enter proper id");
+			}else {
+				responseDTO=prepareResponse(tools);
+				return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.FOUND);
+			}
+			
+		}catch(IdNotMatch e) {
+			String s="Id did't match";
+			return new ResponseEntity<String>(s, HttpStatus.NOT_FOUND);
+		}
+		catch(Exception e) {
 			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@GetMapping("gettools/{name}")
-	public ResponseEntity<ToolResponseDTO> findByName(@PathVariable("name") String name) {
+	public ResponseEntity<?> findByName(@PathVariable("name") String name) {
 		ToolResponseDTO responseDTO=null;
 		try {
 			Tool tools=toolService.findByName(name);
-			responseDTO=prepareResponse(tools);
-			return new ResponseEntity<ToolResponseDTO>(responseDTO,HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("--Tool name mismatch, enter a proper tool name--",e,name);
+			if(tools==null) {
+				throw new NameMismatch("Please enter proper name");
+			}else {
+				responseDTO=prepareResponse(tools);
+				return new ResponseEntity<ToolResponseDTO>(responseDTO,HttpStatus.OK);
+			}
+		}catch (NameMismatch e) {
+			String s="Name didn't match";
+			return new ResponseEntity<String>(s, HttpStatus.BAD_REQUEST);
+		}
+		catch (Exception e) {
 			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.NO_CONTENT);
 		}
 		
@@ -106,15 +122,23 @@ public class ToolController {
 	
 	
 	@GetMapping("getversion/{version}")
-	public ResponseEntity<ToolResponseDTO> findByVersion(@PathVariable("version") String version){
+	public ResponseEntity<?> findByVersion(@PathVariable("version") String version){
 		ToolResponseDTO responseDTO=null;
 		try {
 			Tool tools=toolService.findByVersion(version);
-			responseDTO=prepareResponse(tools);
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("Requested version can't be found, enter proper version");
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
+			if(tools==null) {
+				throw new VersionMismatch(" entered version not found ");
+			}else {
+				responseDTO=prepareResponse(tools);
+				return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.OK);
+			}
+		}
+			catch(VersionMismatch e) {
+				String s="There's a mismatch in your requested version, please enter proper version";
+				return new ResponseEntity<String>(s, HttpStatus.NOT_FOUND);
+			}catch(Exception e) {
+				return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
+			
 		}
 	}
 	
@@ -124,6 +148,7 @@ public class ToolController {
 		responseDTO.setId(tool.getId());
 		responseDTO.setName(tool.getName());
 		responseDTO.setVersion(tool.getVersion());
+		responseDTO.setConfig(tool.getConfig());
 		return responseDTO;
 	}
 	

@@ -1,0 +1,5 @@
+package com.blackstraw.Tool.exception;
+
+public class ExceptionModel {
+
+}

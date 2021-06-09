@@ -14,19 +14,27 @@ public class Tool {
 	private int id;
 	private String name;
 	private String version;
+	private String config;
 	
 	
 	public Tool() {
 		super();
 	}
+	
 
 
-	public Tool(int id, String name, String version) {
+
+
+	public Tool(int id, String name, String version, String config) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.version = version;
+		this.config = config;
 	}
+
+
+
 
 
 	public int getId() {
@@ -57,6 +65,17 @@ public class Tool {
 	public void setVersion(String version) {
 		this.version = version;
 	}
+	
+	public String getConfig() {
+		return config;
+	}
+	
+	public void setConfig(String config) {
+		this.config = config;
+	}
+
+
+
 
 
 	@Override
@@ -90,6 +109,11 @@ public class Tool {
 			return false;
 		return true;
 	}
+
+
+
+
+
 	
 	
 	

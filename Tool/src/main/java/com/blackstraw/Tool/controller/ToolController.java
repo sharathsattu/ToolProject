@@ -29,40 +29,20 @@ import com.blackstraw.Tool.service.ToolService;
 @RequestMapping("/tool")
 public class ToolController {
 	
-	Logger logger=LoggerFactory.getLogger(ToolController.class);
 	
 	@Autowired
 	private ToolService toolService;
 	
 	
 	@PostMapping
-	public ResponseEntity<ToolResponseDTO> save(@RequestBody Tool tool) {
-		ToolResponseDTO responseDTO=null;
-		try {
-			Tool tools=toolService.save(tool);
-			responseDTO=prepareResponse(tools);
-			return new ResponseEntity<ToolResponseDTO>(responseDTO,HttpStatus.OK);
-		}catch (Exception e){
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	public Tool save(@RequestBody Tool tool) {
+		 return toolService.save(tool);
 	}
 	
 	@GetMapping("/getAllTools")
-	public ResponseEntity<List<ToolResponseDTO>> getAll(){
-		List<ToolResponseDTO> responseDTOList=new ArrayList<ToolResponseDTO>();
-		try {
-			List<Tool> toolList=toolService.getAllTools();
-			for(Tool tools: toolList) {
-				try {
-					responseDTOList.add(prepareResponse(tools));
-				}catch(Exception e) {
-					logger.error("error in getting all the tools",e,tools);
-				}
-			} logger.info("All the tools retrieved");
-					return new ResponseEntity<List<ToolResponseDTO>>(responseDTOList, HttpStatus.OK);   
-		}catch(Exception e) {
-			return new ResponseEntity<List<ToolResponseDTO>>(responseDTOList, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	public List<Tool> getAllTools(){
+		return toolService.getAllTools();
+				
 	}
 	
 	@PutMapping
@@ -79,78 +59,24 @@ public class ToolController {
 	}
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<?> findById(@PathVariable("id") int id)  {
-		ToolResponseDTO responseDTO=null;
-		try {
-			Tool tools=toolService.findById(id);
-			if(tools==null) {
-				throw new IdNotMatch(" Please enter proper id");
-			}else {
-				responseDTO=prepareResponse(tools);
-				return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.FOUND);
-			}
-			
-		}catch(IdNotMatch e) {
-			String s="Id did't match";
-			return new ResponseEntity<String>(s, HttpStatus.NOT_FOUND);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
-		}
+	public Tool findById(@PathVariable("id") int id) {
+		return toolService.findById(id);
 	}
 	
 	@GetMapping("gettools/{name}")
 	public ResponseEntity<?> findByName(@PathVariable("name") String name) {
-		ToolResponseDTO responseDTO=null;
-		try {
-			Tool tools=toolService.findByName(name);
-			if(tools==null) {
-				throw new NameMismatch("Please enter proper name");
-			}else {
-				responseDTO=prepareResponse(tools);
-				return new ResponseEntity<ToolResponseDTO>(responseDTO,HttpStatus.OK);
-			}
-		}catch (NameMismatch e) {
-			String s="Name didn't match";
-			return new ResponseEntity<String>(s, HttpStatus.BAD_REQUEST);
-		}
-		catch (Exception e) {
-			return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.NO_CONTENT);
-		}
+		return toolService.findByName(name);
 		
 	}
 	
 	
 	@GetMapping("getversion/{version}")
 	public ResponseEntity<?> findByVersion(@PathVariable("version") String version){
-		ToolResponseDTO responseDTO=null;
-		try {
-			Tool tools=toolService.findByVersion(version);
-			if(tools==null) {
-				throw new VersionMismatch(" entered version not found ");
-			}else {
-				responseDTO=prepareResponse(tools);
-				return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.OK);
-			}
-		}
-			catch(VersionMismatch e) {
-				String s="There's a mismatch in your requested version, please enter proper version";
-				return new ResponseEntity<String>(s, HttpStatus.NOT_FOUND);
-			}catch(Exception e) {
-				return new ResponseEntity<ToolResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
-			
-		}
+		return toolService.findByVersion(version);
 	}
 	
 	
-	private ToolResponseDTO prepareResponse(Tool tool) {
-		ToolResponseDTO responseDTO=new ToolResponseDTO();
-		responseDTO.setId(tool.getId());
-		responseDTO.setName(tool.getName());
-		responseDTO.setVersion(tool.getVersion());
-		responseDTO.setConfig(tool.getConfig());
-		return responseDTO;
-	}
+
 	
 
 }

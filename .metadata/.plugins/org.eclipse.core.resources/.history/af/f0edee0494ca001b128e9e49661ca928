@@ -1,0 +1,56 @@
+package com.blackstraw.Tool.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Table(name="tool")
+
+
+@AllArgsConstructor
+@Data
+public class Tool {
+	
+	@Id
+	@GeneratedValue
+	private int id;
+	private String name;
+	private String version;
+	private String config;
+	
+	
+	public Tool() {
+		super();
+	}
+
+
+	public int getId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
+
+
+
+	
+
+
+
+
+	
+	
+	
+	
+	
+	
+
+}

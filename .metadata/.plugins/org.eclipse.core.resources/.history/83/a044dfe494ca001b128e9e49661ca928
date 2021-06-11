@@ -1,0 +1,34 @@
+package com.blackstraw.Tool.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ToolResponseDTO {
+	
+	private int id;
+	private String name;
+	private String version;
+	private String config;
+	
+	public ToolResponseDTO() {
+		
+	}
+
+	public void setId(int id2) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+
+	
+	
+	
+
+	
+	
+
+}

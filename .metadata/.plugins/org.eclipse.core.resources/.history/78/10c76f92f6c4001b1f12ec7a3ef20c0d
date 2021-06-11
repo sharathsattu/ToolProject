@@ -1,5 +1,0 @@
-package com.blackstraw.Tool.service;
-
-public interface ToolService {
-
-}

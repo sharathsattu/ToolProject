@@ -1,0 +1,5 @@
+package com.blackstraw.Tool.interceptor;
+
+public class ExecutionTimeInterceptor {
+
+}

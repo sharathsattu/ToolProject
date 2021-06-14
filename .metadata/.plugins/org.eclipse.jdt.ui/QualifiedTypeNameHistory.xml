@@ -46,11 +46,17 @@
 <fullyQualifiedTypeName name="com.blackstraw.Tool.dto.ToolResponseDTO"/>
 <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="org.slf4j.Logger"/>
 <fullyQualifiedTypeName name="com.blackstraw.Tool.globalExceptionHandler.VersionMismatch"/>
 <fullyQualifiedTypeName name="lombok.Getter"/>
 <fullyQualifiedTypeName name="lombok.Setter"/>
-<fullyQualifiedTypeName name="lombok.ToString"/>
+<fullyQualifiedTypeName name="org.slf4j.Logger"/>
+<fullyQualifiedTypeName name="ch.qos.logback.classic.Logger"/>
+<fullyQualifiedTypeName name="com.blackstraw.Tool.serviceImpl.ToolServiceImpl"/>
+<fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
+<fullyQualifiedTypeName name="lombok.extern.log4j.Log4j"/>
+<fullyQualifiedTypeName name="lombok.extern.java.Log"/>
 <fullyQualifiedTypeName name="lombok.Data"/>
+<fullyQualifiedTypeName name="lombok.ToString"/>
 <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
+<fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
 </qualifiedTypeNameHistroy>

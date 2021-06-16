@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ToolServiceImpl implements ToolService {
 	
-	@Autowired
+	@Autowired(required = true)
 	private ToolRepository toolRepository;
 
 	@Override

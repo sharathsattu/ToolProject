@@ -1,0 +1,26 @@
+package com.blackstraw.Tool.model;
+
+import java.io.File;
+
+import org.apache.catalina.mapper.Mapper;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
+public class YamlTool {
+
+	public static void main(String[] args) {
+		
+		String input="{ \"name\":\"sql\", \"version\":\"1.0.0\", \"config\":\"i3\"}";
+			ObjectMapper mapper=new ObjectMapper();
+		try {
+			Tool tool=mapper.readValue(input, Tool.class);
+			System.out.println(tool.getId());
+		} catch(Exception e) {
+			
+		}
+		
+		
+	}
+
+}

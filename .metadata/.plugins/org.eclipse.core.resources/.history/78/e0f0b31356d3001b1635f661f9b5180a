@@ -1,0 +1,5 @@
+package com.fileupload.FileUpload.globalException;
+
+public class GlobalExceptionHandler {
+
+}

@@ -1,0 +1,5 @@
+package com.fileupload.FileUpload.controller;
+
+public class FileUploadController {
+
+}
